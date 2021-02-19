@@ -1,4 +1,23 @@
 import tkinter as tk
+# from readCSV import getLatestData
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import datetime
+
+
+def currentTime():
+    dt = datetime.datetime.now()
+    d = dt.strftime("%Y-%m-%d")
+    t = dt.strftime("%H:%M:%S")
+    timeDate.config(text="Date : {}\nTime : {}".format(d,t))
+    timeDate.after(1000, currentTime)
+
+#reading data
+data = pd.read_csv("sensor_readings.csv")
+
+lastIndex = len(data) - 1
+
 
 window = tk.Tk()
 
@@ -30,8 +49,20 @@ logo.grid(row=2, column=4, rowspan=4, columnspan=4,sticky="nsew")
 nt = tk.Label(master=frame1, text="nothing")
 nt.grid(row=2, column=9, rowspan=2, sticky="nsew" )
 
-timeDate = tk.Label(master=frame1, text="Time:\nDate:", bg="pink")
-timeDate.grid(row=1, column=10, rowspan=3, columnspan=2, sticky="nsew")
+current = tk.Label(master=frame1, text="Current Time", bg="white")
+current.grid(row=0, column=10, columnspan=2, sticky="nsew")
+
+timeDate = tk.Label(master=frame1, bg="pink")
+timeDate.grid(row=1, column=10, rowspan=2, columnspan=2, sticky="nsew")
+currentTime()
+
+lstRead = tk.Label(master=frame1, text="Last Reading", bg="white")
+lstRead.grid(row=3, column=10, columnspan=2, sticky="nsew")
+
+d = data["date"][lastIndex]
+t = data["time"][lastIndex]
+lstRead = tk.Label(master=frame1, text="Date : {}\nTime : {}".format(d,t), bg="green")
+lstRead.grid(row=4, column=10, rowspan=2, columnspan=2, sticky="nsew")
 
 #frame 2
 frame2 = tk.Frame(master=window, width=800, height=140, bg="blue")
@@ -40,23 +71,35 @@ frame2.grid(row=1, sticky="nsew")
 frame2.rowconfigure([0], weight=1, minsize=140)
 frame2.columnconfigure([0,1,2,3,4,5], weight=1, minsize=133)
 
-data1 = tk.Label(master=frame2, text="data1", bg="red")
-data1.grid(row=0, column=0, sticky="nsew")
+p = data["PH"][lastIndex]
+txt = "PH\n{}".format(p)
+data1 = tk.Button(master=frame2, text=txt, bg="red")
+data1.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
-data2 = tk.Label(master=frame2, text="data2", bg="orange")
-data2.grid(row=0, column=1, sticky="nsew")
+p = data["RTD"][lastIndex]
+txt = "RTD\n{}".format(p)
+data2 = tk.Button(master=frame2, text=txt, bg="orange")
+data2.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
 
-data3 = tk.Label(master=frame2, text="data3", bg="yellow")
-data3.grid(row=0, column=2, sticky="nsew")
+p = data["ORP"][lastIndex]
+txt = "ORP\n{}".format(p)
+data3 = tk.Button(master=frame2, text=txt, bg="yellow")
+data3.grid(row=0, column=2, sticky="nsew", padx=5, pady=5)
 
-data4 = tk.Label(master=frame2, text="data4", bg="green")
-data4.grid(row=0, column=3, sticky="nsew")
+p = data["DO"][lastIndex]
+txt = "DO\n{}".format(p)
+data4 = tk.Button(master=frame2, text=txt, bg="green")
+data4.grid(row=0, column=3, sticky="nsew", padx=5, pady=5)
 
-data5 = tk.Label(master=frame2, text="data5", bg="Indigo")
-data5.grid(row=0, column=4, sticky="nsew")
+p = data["EC"][lastIndex]
+txt = "EC\n{}".format(p)
+data5 = tk.Button(master=frame2, text=txt, bg="Indigo")
+data5.grid(row=0, column=4, sticky="nsew", padx=5, pady=5)
 
-data6 = tk.Label(master=frame2, text="data6", bg="blue")
-data6.grid(row=0, column=5, sticky="nsew")
+p = data["F"][lastIndex]
+txt = "F\n{}".format(p)
+data6 = tk.Button(master=frame2, text=txt, bg="blue")
+data6.grid(row=0, column=5, sticky="nsew", padx=5, pady=5)
 
 
 #frame 3
