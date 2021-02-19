@@ -5,14 +5,15 @@ window = tk.Tk()
 #Configuration of rows
 window.rowconfigure([0, 1, 2], weight=1)
 window.columnconfigure(0, weight=1, minsize=50)
+window.title("Water quality monitoring")
 
 #frame 1
-frame1 = tk.Frame(master=window, width=1000, height=150, bg="red")
+frame1 = tk.Frame(master=window, width=800, height=140, bg="red")
 frame1.grid(row=0, sticky="nsew")
 
-frame1.rowconfigure([0,1,2,3,4,5], weight=1, minsize=20)
-frame1.columnconfigure([0,1,2,3,4,5,6,7,8,9,10,11], weight=1, minsize=83)
-
+frame1.rowconfigure([0,1,2,3,4,5], weight=1, minsize=23)
+frame1.columnconfigure([0,1,2,3,4,5,6,7,8,9,10,11], weight=1, minsize=66)
+#
 info = tk.Button(master=frame1, text="info")
 info.grid(row=1, column=0, rowspan=3, columnspan=2, sticky="nsew" )
 
@@ -33,11 +34,11 @@ timeDate = tk.Label(master=frame1, text="Time:\nDate:", bg="pink")
 timeDate.grid(row=1, column=10, rowspan=3, columnspan=2, sticky="nsew")
 
 #frame 2
-frame2 = tk.Frame(master=window, width=1000, height=200, bg="blue")
+frame2 = tk.Frame(master=window, width=800, height=140, bg="blue")
 frame2.grid(row=1, sticky="nsew")
 
-frame2.rowconfigure([0], weight=1, minsize=150)
-frame2.columnconfigure([0,1,2,3,4,5], weight=1, minsize=167)
+frame2.rowconfigure([0], weight=1, minsize=140)
+frame2.columnconfigure([0,1,2,3,4,5], weight=1, minsize=133)
 
 data1 = tk.Label(master=frame2, text="data1", bg="red")
 data1.grid(row=0, column=0, sticky="nsew")
@@ -59,11 +60,11 @@ data6.grid(row=0, column=5, sticky="nsew")
 
 
 #frame 3
-frame3 = tk.Frame(master=window, width=1000, height=250, bg="green")
+frame3 = tk.Frame(master=window, width=800, height=200, bg="green")
 frame3.grid(row=2, sticky="nsew")
 
-frame3.rowconfigure([0], weight=1, minsize=250)
-frame3.columnconfigure([0,1,2,3], weight=1, minsize=250)
+frame3.rowconfigure([0], weight=1, minsize=200)
+frame3.columnconfigure([0,1,2,3], weight=1, minsize=200)
 
 block1 = tk.Label(master=frame3, text="block1", bg="blue")
 block1.grid(row=0, column=0, sticky="nsew")
