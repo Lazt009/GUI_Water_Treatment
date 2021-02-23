@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
 from graphPlot import plotGraph
+from DebugWindow import childWindow
+from info import infoWindow
 
 
 def currentTime():
@@ -67,8 +69,8 @@ lstRead = tk.Label(
     master=frame1, text="Date : {}\nTime : {}".format(d, t), bg=color2)
 lstRead.grid(row=1, column=0, rowspan=2, columnspan=2, sticky="nsew")
 
-# info = tk.Button(master=frame1, text="info", bg=color3)
-# info.grid(row=1, column=0, rowspan=3, columnspan=2, sticky="nsew")
+info = tk.Button(master=frame1, text="info", bg=color3,command=lambda: infoWindow(window))
+info.grid(row=3, column=3, sticky="nsew")
 
 
 heading = tk.Label(master=frame1, text="Water Quality Monitoring",
@@ -76,6 +78,8 @@ heading = tk.Label(master=frame1, text="Water Quality Monitoring",
 heading.grid(row=0, column=3, rowspan=2, columnspan=6,
              sticky="nsew", padx=pad, pady=pad)
 
+debug = tk.Button(master=frame1, text="Debug", bg=color3,command=lambda: childWindow(window))
+debug.grid(row=3, column=8, sticky="nsew")
 
 logoImg = tk.PhotoImage(file="logo.png")
 logo = tk.Label(frame1, image=logoImg, bg=BGcolor)
