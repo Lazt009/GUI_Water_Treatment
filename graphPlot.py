@@ -4,7 +4,7 @@ import pandas as pd
 import datetime
 
 
-def PlotGraph(col):
+def plotGraph(col):
     data = pd.read_csv("sensor_readings.csv")
 
     # process date time
@@ -28,4 +28,4 @@ def PlotGraph(col):
     plt.show()
 
 
-PlotGraph("PH")
+# PlotGraph("PH")

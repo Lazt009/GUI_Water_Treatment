@@ -1,38 +1,9 @@
 import tkinter as tk
-# from readCSV import getLatestData
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
-# import graphPlot as gplot
-
-
-def PlotGraph(col):
-    data = pd.read_csv("sensor_readings.csv")
-
-    # process date time
-    dateTime = []
-    for date, time in zip(data["date"], data["time"]):
-        # print(date, time)
-        year, month, day = map(int, date.split("-"))
-        hour, minute, second = map(int, time.split(":"))
-        dateTime.append(datetime.datetime(
-            year, month, day, hour, minute, second))
-
-    # To set Figure size
-    plt.figure(figsize=(9, 4))
-
-    # To plot graph, with datetime as x value and specified param as y value
-    plt.plot(dateTime, data[col], marker='.')
-    plt.title("{} Graph".format(col))
-    plt.xlabel("Date and Time")
-    plt.ylabel(col)
-
-    plt.show()
-    # print("Graph Done")
-
-
-# PlotGraph("PH")
+from graphPlot import plotGraph
 
 
 def currentTime():
@@ -80,21 +51,28 @@ pad2 = 2
 
 
 # frame 1
-frame1 = tk.Frame(master=window, width=800, height=140, bg="#272727")
+frame1 = tk.Frame(master=window, width=800, height=140, bg=BGcolor)
 frame1.grid(row=0, sticky="nsew", padx=5, pady=5)
 
 frame1.rowconfigure([0, 1, 2, 3, 4, 5], weight=1, minsize=23)
 frame1.columnconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
                         10, 11], weight=1, minsize=50)
-#
-info = tk.Button(master=frame1, text="info", bg=color3)
-info.grid(row=1, column=0, rowspan=3, columnspan=2, sticky="nsew")
 
-nt = tk.Label(master=frame1, text="", bg=BGcolor)
-nt.grid(row=2, column=2, rowspan=2, sticky="nsew")
+lstRead = tk.Label(master=frame1, text="Last Reading", bg=color2)
+lstRead.grid(row=0, column=0, columnspan=2, sticky="nsew", )
+
+d = data["date"][lastIndex]
+t = data["time"][lastIndex]
+lstRead = tk.Label(
+    master=frame1, text="Date : {}\nTime : {}".format(d, t), bg=color2)
+lstRead.grid(row=1, column=0, rowspan=2, columnspan=2, sticky="nsew")
+
+# info = tk.Button(master=frame1, text="info", bg=color3)
+# info.grid(row=1, column=0, rowspan=3, columnspan=2, sticky="nsew")
+
 
 heading = tk.Label(master=frame1, text="Water Quality Monitoring",
-                   bg="#272727", fg="#14A76C", borderwidth=0, font=("Verdana", 24))
+                   bg=BGcolor, fg=color4, borderwidth=0, font=("Verdana", 24))
 heading.grid(row=0, column=3, rowspan=2, columnspan=6,
              sticky="nsew", padx=pad, pady=pad)
 
@@ -104,24 +82,12 @@ logo = tk.Label(frame1, image=logoImg, bg=BGcolor)
 logo.grid(row=2, column=4, rowspan=4, columnspan=4,
           ipadx=1, ipady=1, sticky="nsew")
 
-nt = tk.Label(master=frame1, text="", bg=BGcolor)
-nt.grid(row=2, column=9, rowspan=2, sticky="nsew")
-
-current = tk.Label(master=frame1, text="Current Time", bg="white")
+current = tk.Label(master=frame1, text="Current Time", bg=color2)
 current.grid(row=0, column=10, columnspan=2, sticky="nsew")
 
-timeDate = tk.Label(master=frame1, bg="pink")
+timeDate = tk.Label(master=frame1, bg=color2)
 timeDate.grid(row=1, column=10, rowspan=2, columnspan=2, sticky="nsew")
 currentTime()
-
-lstRead = tk.Label(master=frame1, text="Last Reading", bg="white")
-lstRead.grid(row=3, column=10, columnspan=2, sticky="nsew")
-
-d = data["date"][lastIndex]
-t = data["time"][lastIndex]
-lstRead = tk.Label(
-    master=frame1, text="Date : {}\nTime : {}".format(d, t), bg="green")
-lstRead.grid(row=4, column=10, rowspan=2, columnspan=2, sticky="nsew")
 
 # frame 2
 frame2 = tk.Frame(master=window, width=800, height=140,
@@ -134,42 +100,42 @@ frame2.columnconfigure([0, 1, 2, 3, 4, 5], weight=1, minsize=120)
 p = data["PH"][lastIndex]
 txt = "PH\n{}".format(p)
 data1 = tk.Button(master=frame2, text=txt, bg=color4,
-                  font=BFont, command=lambda: PlotGraph("PH"))
+                  font=BFont, command=lambda: plotGraph("PH"))
 data1.grid(row=0, column=0, sticky="nsew",
            padx=pad, pady=pad, ipadx=5, ipady=5)
 
 p = data["RTD"][lastIndex]
 txt = "RTD\n{}".format(p)
 data2 = tk.Button(master=frame2, text=txt, bg=color4,
-                  font=BFont, command=lambda: PlotGraph("RTD"))
+                  font=BFont, command=lambda: plotGraph("RTD"))
 data2.grid(row=0, column=1, sticky="nsew",
            padx=pad, pady=pad, ipadx=5, ipady=5)
 
 p = data["ORP"][lastIndex]
 txt = "ORP\n{}".format(p)
 data3 = tk.Button(master=frame2, text=txt, bg=color4,
-                  font=BFont, command=lambda: PlotGraph("ORP"))
+                  font=BFont, command=lambda: plotGraph("ORP"))
 data3.grid(row=0, column=2, sticky="nsew",
            padx=pad, pady=pad, ipadx=5, ipady=5)
 
 p = data["DO"][lastIndex]
 txt = "DO\n{}".format(p)
 data4 = tk.Button(master=frame2, text=txt, bg=color4,
-                  font=BFont, command=lambda: PlotGraph("DO"))
+                  font=BFont, command=lambda: plotGraph("DO"))
 data4.grid(row=0, column=3, sticky="nsew",
            padx=pad, pady=pad, ipadx=5, ipady=5)
 
 p = data["EC"][lastIndex]
 txt = "EC\n{}".format(p)
 data5 = tk.Button(master=frame2, text=txt, bg=color4,
-                  font=BFont, command=lambda: PlotGraph("EC"))
+                  font=BFont, command=lambda: plotGraph("EC"))
 data5.grid(row=0, column=4, sticky="nsew",
            padx=pad, pady=pad, ipadx=5, ipady=5)
 
 p = data["F"][lastIndex]
 txt = "F\n{}".format(p)
 data6 = tk.Button(master=frame2, text=txt, bg=color4,
-                  font=BFont, command=lambda: PlotGraph("F"))
+                  font=BFont, command=lambda: plotGraph("F"))
 data6.grid(row=0, column=5, sticky="nsew",
            padx=pad, pady=pad, ipadx=5, ipady=5)
 
